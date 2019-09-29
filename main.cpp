@@ -1,26 +1,11 @@
 #include <iostream>
-#include <vector>
+#include <cstdio>
 
-using namespace std;
-vector<int> arr = {8, 1, 12, 5, 11, 75, 54, 12, 98, 111, 86};
 
-vector<int> insertSort(vector<int> array, int length) {
-    int i, key = 0;
-    for (int j = 1; j < length; j++) {
-        key = array[j];
-        i = j - 1;
-        while (i >= 0 && array[i] > key) {
-            array[i + 1] = array[i];
-            i--;
-        }
-        array[i + 1] = key;
-    }
-    return array;
-}
 
-void merge(vector<int> array, int first, int last) {
+void merge(int array[], int first, int last) {
     int it1 = 0, it2 = 0;
-    vector<int> result(last - first + 1);
+    int result[last - first + 1];
     int mid = (first + last) / 2;
     while (first + it1 < mid && mid + it2 < last) {
         if (array[first + it1] < array[mid + it2]) {
@@ -45,19 +30,27 @@ void merge(vector<int> array, int first, int last) {
     }
 }
 
-void mergeSort(vector<int> array, int first, int last) {
-    if (first < last) {
+void mergeSort(int* array, int first, int last) {
+    if (first < last - 1) {
         mergeSort(array, first, (first + last) / 2);
-        mergeSort(array, (first + last) / 2 + 1, last);
+        mergeSort(array, (first + last) / 2, last);
         merge(array, first, last);
     }
 }
 
 int main() {
-    mergeSort(arr, 0, 11);
-    for (int i = 0; i < 11; i++){
-        cout << arr[i] << " ";
+    int n;
+    freopen("sort.in","r", stdin);
+    freopen("sort.out", "w", stdout);
+    std::cin >> n;
+    int arr[n];
+    for (int i = 0; i< n; i++){
+        std::cin >> arr[i];
     }
+    mergeSort(arr, 0, n);
+    for (int i = 0; i < n; i++){
+        std::cout << arr[i] << " ";
+    }
+    fclose(stdout);
     return 0;
 }
-
